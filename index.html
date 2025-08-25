@@ -3,12 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Saif - Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>My Portfolio</h1>
-    </header>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Saif</a>
+            </div>
+            <div class="nav-menu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Section -->
+    <section id="home" class="welcome">
+        <div class="welcome-container">
+            <div class="welcome-content">
+                <h1 class="welcome-title">
+                    <span class="greeting">Hello, I'm</span>
+                    <span class="name">Saif</span>
+                </h1>
+                
+                <div class="welcome-description">
+                    <p class="intro-text">
+                        I am a <strong>Computer Science undergraduate</strong> from 
+                        <span class="university">Khulna University of Engineering & Technology</span>, 
+                        Khulna, Bangladesh.
+                    </p>
+                    
+                    <p class="tagline">
+                        Passionate about creating digital solutions and exploring the endless possibilities of technology.
+                    </p>
+                </div>
+
+                <div class="welcome-actions">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+
+            <div class="welcome-visual">
+                <div class="profile-placeholder">
+                    <div class="profile-circle">
+                        <span class="profile-initial">S</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span class="status-text">Available for opportunities</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <span class="scroll-text">Scroll to explore</span>
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
 </body>
 </html>
