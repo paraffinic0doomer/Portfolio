@@ -1,0 +1,69 @@
+{
+  "skills": [
+    {
+      "icon": "💻",
+      "title": "Programming",
+      "description": "Python, Java, JavaScript, C++",
+      "category": "coding"
+    },
+    {
+      "icon": "🌐",
+      "title": "Web Development",
+      "description": "HTML, CSS, React, Node.js",
+      "category": "web"
+    },
+    {
+      "icon": "🗄️",
+      "title": "Database",
+      "description": "MySQL, MongoDB, PostgreSQL",
+      "category": "database"
+    },
+    {
+      "icon": "🛠️",
+      "title": "Tools & Others",
+      "description": "Git, Docker, Linux, VS Code",
+      "category": "tools"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Portfolio Website",
+      "description": "A modern, responsive portfolio website built with HTML, CSS, and JavaScript featuring glassmorphism design and smooth animations.",
+      "technologies": ["HTML", "CSS", "JavaScript"],
+      "links": {
+        "live": "#",
+        "code": "#"
+      },
+      "featured": true,
+      "status": "completed"
+    },
+    {
+      "title": "E-Commerce System",
+      "description": "Full-stack e-commerce application with user authentication, product management, and payment integration.",
+      "technologies": ["React", "Node.js", "MongoDB"],
+      "links": {
+        "live": "#",
+        "code": "#"
+      },
+      "featured": true,
+      "status": "completed"
+    },
+    {
+      "title": "Task Management App",
+      "description": "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+      "technologies": ["Python", "Django", "PostgreSQL"],
+      "links": {
+        "live": "#",
+        "code": "#"
+      },
+      "featured": true,
+      "status": "completed"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-08-28",
+    "version": "1.0.0",
+    "skillsCount": 4,
+    "projectsCount": 3
+  }
+}
