@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin Panel</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Portfolio Admin Panel</h1>
+            <p>Manage your portfolio content dynamically</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-button active">Dashboard</button>
+            <button class="tab-button">Bio & About</button>
+            <button class="tab-button">Skills</button>
+            <button class="tab-button">Projects</button>
+            <button class="tab-button">Contact Info</button>
+            <button class="tab-button">Messages</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">-</div>
+                    <div class="stat-label">Total Visits</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">-</div>
+                    <div class="stat-label">Messages</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">-</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h3>Quick Actions</h3>
+                    <button class="btn btn-primary">Refresh Stats</button>
+                    <button class="btn btn-secondary">Backup Data</button>
+                </div>
+                <div class="card">
+                    <h3>Recent Activity</h3>
+                    <p>No recent activity</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bio & About Tab -->
+        <div id="bio" class="tab-content">
+            <div class="card">
+                <h3>Profile Picture Upload</h3>
+                <form id="profile-picture-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="profile-picture">Upload Profile Picture</label>
+                        <input type="file" id="profile-picture" name="profile_picture" accept="image/*">
+                        <div id="profile-preview">
+                            <img id="current-profile" src="" alt="Profile Preview" style="max-width: 150px; max-height: 150px; border-radius: 50%; display: none; object-fit: cover;">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload Picture</button>
+                </form>
+            </div>
+            
+            <div class="card">
+                <h3>Bio & About Section</h3>
+                <form id="bio-form">
+                    <div class="form-group">
+                        <label for="bio-name">Name</label>
+                        <input type="text" id="bio-name" placeholder="Your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio-title">Title/Role</label>
+                        <input type="text" id="bio-title" placeholder="e.g., Computer Science Student">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio-description">Bio Description</label>
+                        <textarea id="bio-description" placeholder="Write about yourself..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio-location">Location</label>
+                        <input type="text" id="bio-location" placeholder="Your location">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Bio</button>
+                    <button type="button" class="btn btn-secondary">Load Current</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Skills Tab -->
+        <div id="skills" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>Add New Skill</h3>
+                    <form id="skill-form">
+                        <div class="form-group">
+                            <label for="skill-name">Skill Name</label>
+                            <input type="text" id="skill-name" placeholder="e.g., JavaScript">
+                        </div>
+                        <div class="form-group">
+                            <label for="skill-level">Proficiency Level</label>
+                            <select id="skill-level">
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Expert">Expert</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="skill-category">Category</label>
+                            <select id="skill-category">
+                                <option value="Programming">Programming Languages</option>
+                                <option value="Frontend">Frontend Technologies</option>
+                                <option value="Backend">Backend Technologies</option>
+                                <option value="Database">Database</option>
+                                <option value="Tools">Tools & Software</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Skill</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Current Skills</h3>
+                    <div id="skills-list">
+                        <!-- Sample skill items with delete buttons -->
+                        <div class="skill-item">
+                            <h4>JavaScript</h4>
+                            <p><strong>Level:</strong> Advanced</p>
+                            <p><strong>Category:</strong> Programming Languages</p>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                        <div class="skill-item">
+                            <h4>React</h4>
+                            <p><strong>Level:</strong> Intermediate</p>
+                            <p><strong>Category:</strong> Frontend Technologies</p>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>Add New Project</h3>
+                    <form id="project-form">
+                        <div class="form-group">
+                            <label for="project-title">Project Title</label>
+                            <input type="text" id="project-title" placeholder="Project name">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-description">Description</label>
+                            <textarea id="project-description" placeholder="Describe your project..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-technologies">Technologies Used</label>
+                            <input type="text" id="project-technologies" placeholder="e.g., HTML, CSS, JavaScript">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-link">Project Link</label>
+                            <input type="url" id="project-link" placeholder="https://github.com/username/project">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-status">Status</label>
+                            <select id="project-status">
+                                <option value="Completed">Completed</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Planning">Planning</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Project</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3>Current Projects</h3>
+                    <div id="projects-list">
+                        <!-- Sample project items with delete buttons -->
+                        <div class="project-item">
+                            <h4>Portfolio Website</h4>
+                            <p>A modern responsive portfolio website with glassmorphism design</p>
+                            <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
+                            <p><strong>Status:</strong> Completed</p>
+                            <a href="#" target="_blank" class="btn btn-secondary">View Project</a>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                        <div class="project-item">
+                            <h4>E-commerce App</h4>
+                            <p>Full-stack e-commerce application with payment integration</p>
+                            <p><strong>Technologies:</strong> React, Node.js, MongoDB</p>
+                            <p><strong>Status:</strong> In Progress</p>
+                            <a href="#" target="_blank" class="btn btn-secondary">View Project</a>
+                            <button class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info Tab -->
+        <div id="contact-info" class="tab-content">
+            <div class="card">
+                <h3>Contact Information</h3>
+                <form id="contact-info-form">
+                    <div class="form-group">
+                        <label for="contact-email">Email Address</label>
+                        <input type="email" id="contact-email" placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-phone">Phone Number</label>
+                        <input type="tel" id="contact-phone" placeholder="+1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-address">Address</label>
+                        <textarea id="contact-address" placeholder="Your address..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="linkedin-url">LinkedIn URL</label>
+                        <input type="url" id="linkedin-url" placeholder="https://linkedin.com/in/username">
+                    </div>
+                    <div class="form-group">
+                        <label for="github-url">GitHub URL</label>
+                        <input type="url" id="github-url" placeholder="https://github.com/username">
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp-number">WhatsApp Number</label>
+                        <input type="tel" id="whatsapp-number" placeholder="+1234567890">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Contact Info</button>
+                    <button type="button" class="btn btn-secondary">Load Current</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Messages Tab -->
+        <div id="messages" class="tab-content">
+            <div class="card">
+                <h3>Contact Messages</h3>
+                <div class="form-group">
+                    <button class="btn btn-secondary">Refresh Messages</button>
+                    <button class="btn btn-danger">Clear All</button>
+                </div>
+                <div id="messages-list" class="contact-list">
+                    <!-- Sample messages -->
+                    <div class="contact-item">
+                        <h4>John Doe</h4>
+                        <p><strong>Email:</strong> john@example.com</p>
+                        <p><strong>Message:</strong> Great portfolio! I'd like to discuss a project opportunity.</p>
+                        <small>Received: 2025-08-28 10:30 AM</small>
+                        <br><br>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Portfolio Button -->
+    <button class="preview-button" onclick="window.open('index.html', '_blank')">
+        📱 Preview Portfolio
+    </button>
+
+    <!-- Sign Out Button -->
+    <button class="signout-button" onclick="window.location.href='signin.html'">
+        🚪 Sign Out
+    </button>
+
+    <script>
+        // Simple tab navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to tab buttons
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all tabs and buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    tabContents[index].classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
