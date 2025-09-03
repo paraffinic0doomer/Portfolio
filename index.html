@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Creative Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -12,11 +13,11 @@
     <!-- Side Navigation -->
     <nav class="side-nav">        
         <ul class="nav-links">
-            <li><a href="#intro" class="nav-link" data-section="intro">01. Intro</a></li>
-            <li><a href="#about" class="nav-link" data-section="about">02. About</a></li>
-            <li><a href="#skills" class="nav-link" data-section="skills">03. Skills</a></li>
-            <li><a href="#projects" class="nav-link" data-section="projects">04. Projects</a></li>
-            <li><a href="#contact" class="nav-link" data-section="contact">05. Contact</a></li>
+            <li><a href="#intro" class="nav-link" data-section="intro">Home</a></li>
+            <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+            <li><a href="#skills" class="nav-link" data-section="skills">Skills</a></li>
+            <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+            <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
         </ul>
         
         <div class="nav-footer">
@@ -37,24 +38,31 @@
     <main class="main-content">
         <!-- Intro Section -->
         <section id="intro" class="section intro-section">
-            <div class="intro-content">
-                <div class="intro-label">Hello, I'm</div>
-                <h1 class="intro-name" id="dynamic-name">[Your Name]</h1>
-                <h2 class="intro-title" id="dynamic-title">[Your Title]</h2>
-                <p class="intro-description" id="dynamic-bio">[Your Bio Description]</p>
+            <div class="section-header">
+                <h2 class="section-title">Welcome</h2>
+                <div class="section-line"></div>
             </div>
             
-            <div class="intro-visual">
-                <div class="profile-container" id="dynamic-profile-image">
-                    <div class="profile-shape">
-                        <span>[IMG]</span>
-                    </div>
+            <div class="intro-main">
+                <div class="intro-content">
+                    <div class="intro-label">Hello, I'm</div>
+                    <h1 class="intro-name" id="dynamic-name">[Your Name]</h1>
+                    <h2 class="intro-title" id="dynamic-title">[Your Title]</h2>
+                    <p class="intro-description" id="dynamic-bio">[Your Bio Description]</p>
                 </div>
                 
-                <div class="floating-elements">
-                    <div class="float-item"></div>
-                    <div class="float-item"></div>
-                    <div class="float-item"></div>
+                <div class="intro-visual">
+                    <div class="profile-container" id="dynamic-profile-image">
+                        <div class="profile-shape">
+                            <span>[IMG]</span>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-elements">
+                        <div class="float-item"></div>
+                        <div class="float-item"></div>
+                        <div class="float-item"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -62,27 +70,25 @@
         <!-- About Section -->
         <section id="about" class="section about-section">
             <div class="section-header">
-                <span class="section-number">02</span>
                 <h2 class="section-title">About Me</h2>
                 <div class="section-line"></div>
             </div>
             
             <div class="about-content">
-                <div class="about-text" id="dynamic-about-content">
-                    <!-- About content will be populated dynamically -->
-                </div>
+                            <div class="about-text" id="dynamic-about">
+                [About description will appear here]
+            </div>
             </div>
         </section>
 
         <!-- Skills Section -->
         <section id="skills" class="section skills-section">
             <div class="section-header">
-                <span class="section-number">03</span>
                 <h2 class="section-title">Skills & Expertise</h2>
                 <div class="section-line"></div>
             </div>
             
-            <div class="skills-container" id="dynamic-skills-container">
+            <div class="skills-container" id="dynamic-skills">
                 <!-- Skill categories will be populated dynamically -->
             </div>
         </section>
@@ -90,12 +96,11 @@
         <!-- Projects Section -->
         <section id="projects" class="section work-section">
             <div class="section-header">
-                <span class="section-number">04</span>
                 <h2 class="section-title">Featured Projects</h2>
                 <div class="section-line"></div>
             </div>
             
-            <div class="work-grid" id="dynamic-projects-container">
+            <div class="work-grid" id="dynamic-projects">
                 <!-- Project cards will be populated dynamically -->
             </div>
         </section>
@@ -103,23 +108,30 @@
         <!-- Contact Section -->
         <section id="contact" class="section contact-section">
             <div class="section-header">
-                <span class="section-number">05</span>
                 <h2 class="section-title">Let's Connect</h2>
                 <div class="section-line"></div>
             </div>
             
             <div class="contact-content">
-                <div class="contact-info">
+                <div class="contact-header">
                     <h3>Ready to start a project?</h3>
-                    <p id="dynamic-contact-description">[Contact description will be added dynamically]</p>
+                    <p>Let's work together to bring your ideas to life!</p>
                     
-                    <div class="contact-methods" id="dynamic-contact-info">
-                        <!-- Contact items will be populated dynamically -->
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <strong>Email:</strong> <span id="dynamic-email">[email]</span>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Phone:</strong> <span id="dynamic-phone">[phone]</span>
+                        </div>
+                        <div class="contact-item">
+                            <strong>Location:</strong> <span id="dynamic-location">[location]</span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="contact-form-wrapper">
-                    <form class="contact-form">
+                    <form id="contact-form" class="contact-form" method="POST" action="contact-simple.php">
                         <div class="form-row">
                             <div class="form-field">
                                 <input type="text" name="name" placeholder="Your Name" required>

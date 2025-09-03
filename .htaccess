@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# Ensure PHP files are executed properly
+AddType application/x-httpd-php .php
+
+# Enable mod_rewrite for clean URLs
+Options +FollowSymLinks
+
+# Allow access to all files
+Options -Indexes
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"

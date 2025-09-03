@@ -59,21 +59,48 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Form submission handler
 const contactForm = document.querySelector('#contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
+        const submitButton = this.querySelector('.submit-button');
+        const originalText = submitButton.textContent;
         
-        // Here you would typically send the data to your server
-        console.log('Form submitted:', data);
+        // Show loading state
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
         
-        // Show success message (you can customize this)
-        alert('Thank you for your message! I will get back to you soon.');
-        
-        // Reset form
-        this.reset();
+        try {
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Send form data to PHP handler
+            const response = await fetch('contact-simple.php', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Success message
+                alert(result.message);
+                this.reset(); // Clear form
+            } else {
+                // Error message
+                let errorMessage = result.message;
+                if (result.errors && result.errors.length > 0) {
+                    errorMessage += '\n\n' + result.errors.join('\n');
+                }
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            alert('Sorry, there was an error sending your message. Please try again later.');
+        } finally {
+            // Restore button state
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
     });
 }
 
@@ -145,11 +172,11 @@ function initSkillBars() {
 const profileShape = document.querySelector('.profile-shape');
 if (profileShape) {
     profileShape.addEventListener('mouseenter', () => {
-        profileShape.style.transform = 'scale(1.05) rotate(2deg)';
+        profileShape.style.transform = 'scale(1.05)';
     });
     
     profileShape.addEventListener('mouseleave', () => {
-        profileShape.style.transform = 'scale(1) rotate(0deg)';
+        profileShape.style.transform = 'scale(1)';
     });
 }
 
@@ -296,3 +323,222 @@ This system allows for:
 Note: All dynamic elements are marked with visual indicators in development mode
 for easy identification and management.
 */
+
+// Dynamic Content Loading
+async function loadPortfolioData() {
+    try {
+        console.log('Loading portfolio data...');
+        const response = await fetch('api/portfolio-data.php');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Portfolio data received:', data);
+        
+        if (data.success) {
+            populatePersonalInfo(data.personal);
+            populateSkills(data.skills);
+            populateProjects(data.projects);
+            populateSocialLinks(data.social);
+            console.log('Portfolio data populated successfully');
+        } else {
+            console.error('API returned error:', data.error);
+            showFallbackContent();
+        }
+    } catch (error) {
+        console.error('Error loading portfolio data:', error);
+        showFallbackContent();
+    }
+}
+
+function showFallbackContent() {
+    // Show default content if API fails
+    const nameEl = document.getElementById('dynamic-name');
+    const titleEl = document.getElementById('dynamic-title');
+    const bioEl = document.getElementById('dynamic-bio');
+    
+    if (nameEl) nameEl.textContent = 'Portfolio Owner';
+    if (titleEl) titleEl.textContent = 'Full Stack Developer';
+    if (bioEl) bioEl.textContent = 'Welcome to my portfolio. Please check back later for updated content.';
+}
+
+function populatePersonalInfo(personal) {
+    if (!personal) return;
+    
+    // Update intro section
+    const nameEl = document.getElementById('dynamic-name');
+    const titleEl = document.getElementById('dynamic-title');
+    const bioEl = document.getElementById('dynamic-bio');
+    
+    if (nameEl) nameEl.textContent = personal.name || '[Your Name]';
+    if (titleEl) titleEl.textContent = personal.title || '[Your Title]';
+    if (bioEl) bioEl.textContent = personal.bio || '[Your Bio Description]';
+    
+    // Update profile image
+    const profileContainer = document.getElementById('dynamic-profile-image');
+    if (profileContainer) {
+        const profileShape = profileContainer.querySelector('.profile-shape');
+        if (profileShape) {
+            if (personal.profile_image && personal.profile_image.trim() !== '') {
+                profileShape.innerHTML = `<img src="${personal.profile_image}" alt="Profile" style="width: 100%; height: 100%; object-fit: cover; object-position: center; border-radius: 50%;">`;
+            } else {
+                profileShape.innerHTML = '<span style="color: #ffffff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); font-size: 2.5rem; font-weight: bold;">[IMG]</span>';
+            }
+        }
+    }
+    
+    // Update about section
+    const aboutEl = document.getElementById('dynamic-about');
+    if (aboutEl) aboutEl.innerHTML = personal.about || '[About description will appear here]';
+    
+    // Update contact info
+    const emailEl = document.getElementById('dynamic-email');
+    const phoneEl = document.getElementById('dynamic-phone');
+    const locationEl = document.getElementById('dynamic-location');
+    
+    if (emailEl) emailEl.textContent = personal.email || '[email]';
+    if (phoneEl) phoneEl.textContent = personal.phone || '[phone]';
+    if (locationEl) locationEl.textContent = personal.location || '[location]';
+    
+    // Update footer
+    const footerNameEl = document.getElementById('dynamic-footer-name');
+    if (footerNameEl) footerNameEl.textContent = personal.name || '[Name]';
+}
+
+function populateSkills(skills) {
+    const skillsContainer = document.getElementById('dynamic-skills');
+    if (!skillsContainer || !skills) return;
+    
+    // Icon mapping for different skill categories and specific skills
+    const skillIcons = {
+        // Category icons
+        'Frontend': 'fas fa-laptop-code',
+        'Backend': 'fas fa-server',
+        'Database': 'fas fa-database',
+        'Tools': 'fas fa-tools',
+        'Other': 'fas fa-cogs',
+        
+        // Specific skill icons
+        'JavaScript': 'fab fa-js-square',
+        'React': 'fab fa-react',
+        'Vue': 'fab fa-vuejs',
+        'Angular': 'fab fa-angular',
+        'Node.js': 'fab fa-node-js',
+        'Python': 'fab fa-python',
+        'PHP': 'fab fa-php',
+        'Java': 'fab fa-java',
+        'CSS': 'fab fa-css3-alt',
+        'HTML': 'fab fa-html5',
+        'Sass': 'fab fa-sass',
+        'Bootstrap': 'fab fa-bootstrap',
+        'Git': 'fab fa-git-alt',
+        'GitHub': 'fab fa-github',
+        'Docker': 'fab fa-docker',
+        'AWS': 'fab fa-aws',
+        'MySQL': 'fas fa-database',
+        'MongoDB': 'fas fa-leaf',
+        'PostgreSQL': 'fas fa-database'
+    };
+    
+    function getSkillIcon(skillName, category) {
+        return skillIcons[skillName] || skillIcons[category] || 'fas fa-code';
+    }
+    
+    let skillsHTML = '';
+    for (const [category, categorySkills] of Object.entries(skills)) {
+        const categoryIcon = skillIcons[category] || 'fas fa-code';
+        skillsHTML += `
+            <div class="skill-category">
+                <div class="skill-category-header">
+                    <i class="${categoryIcon}"></i>
+                    <h3 class="skill-category-title">${category}</h3>
+                </div>
+                <div class="skills-grid">
+        `;
+        
+        categorySkills.forEach(skill => {
+            const skillIcon = getSkillIcon(skill.skill_name, category);
+            skillsHTML += `
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="${skillIcon}"></i>
+                        </div>
+                        <div class="skill-info">
+                            <span class="skill-name">${skill.skill_name}</span>
+                            <span class="skill-percent">${skill.proficiency}%</span>
+                        </div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: ${skill.proficiency}%"></div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        skillsHTML += `
+                </div>
+            </div>
+        `;
+    }
+    
+    skillsContainer.innerHTML = skillsHTML;
+}
+
+function populateProjects(projects) {
+    const projectsContainer = document.getElementById('dynamic-projects');
+    if (!projectsContainer || !projects) return;
+    
+    if (projects.length === 0) {
+        projectsContainer.innerHTML = '<p class="no-projects">No projects available yet.</p>';
+        return;
+    }
+    
+    let projectsHTML = '';
+    projects.forEach(project => {
+        const technologies = JSON.parse(project.technologies || '[]');
+        const techTags = technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('');
+        
+        projectsHTML += `
+            <div class="project-card">
+                <div class="project-content">
+                    <h3 class="project-title">${project.title}</h3>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tech">
+                        ${techTags}
+                    </div>
+                    <div class="project-links">
+                        ${project.github_url ? 
+                            `<a href="${project.github_url}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                                <i class="fab fa-github"></i> Code
+                            </a>` : ''
+                        }
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    projectsContainer.innerHTML = projectsHTML;
+}
+
+function populateSocialLinks(socialLinks) {
+    const socialContainer = document.getElementById('dynamic-social-links');
+    if (!socialContainer || !socialLinks) return;
+    
+    let socialHTML = '';
+    socialLinks.forEach(social => {
+        socialHTML += `
+            <a href="${social.url}" class="social-link" target="_blank" rel="noopener noreferrer" title="${social.platform}">
+                <i class="${social.icon_class}"></i>
+            </a>
+        `;
+    });
+    
+    socialContainer.innerHTML = socialHTML;
+}
+
+// Load data when page loads
+document.addEventListener('DOMContentLoaded', loadPortfolioData);
