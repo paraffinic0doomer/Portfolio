@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Content Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .admin-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            color: #b0b0b0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab-btn.active {
+            color: #00d4ff;
+            border-bottom-color: #00d4ff;
+        }
+        
+        .tab-content {
+            display: none;
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: #242424;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            background: #00d4ff;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            background: #00b8e6;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #7c3aed;
+        }
+        
+        .btn-secondary:hover {
+            background: #6d28d9;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .preview-link {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #7c3aed;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .preview-link:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+        }
+        
+        .success-message {
+            background: rgba(46, 213, 115, 0.1);
+            border: 1px solid #2ed573;
+            color: #2ed573;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .preview-link {
+                position: static;
+                display: block;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>Portfolio Content Manager</h1>
+            <p>Update your portfolio content without touching code</p>
+        </div>
+        
+        <a href="index.html" target="_blank" class="preview-link">🎯 Preview Portfolio</a>
+        
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="showTab('personal')">Personal Info</button>
+            <button class="tab-btn" onclick="showTab('projects')">Projects</button>
+            <button class="tab-btn" onclick="showTab('skills')">Skills</button>
+            <button class="tab-btn" onclick="showTab('contact')">Contact</button>
+        </div>
+        
+        <!-- Personal Info Tab -->
+        <div id="personal" class="tab-content active">
+            <h2>Personal Information</h2>
+            <form id="personalForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="title">Professional Title</label>
+                    <input type="text" id="title" placeholder="e.g., Full Stack Developer">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Short Bio</label>
+                    <textarea id="bio" placeholder="Brief introduction for the hero section"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="about">About Description</label>
+                    <textarea id="about" placeholder="Detailed about section content"></textarea>
+                </div>
+                
+                <button type="submit" class="btn">Update Personal Info</button>
+            </form>
+        </div>
+        
+        <!-- Projects Tab -->
+        <div id="projects" class="tab-content">
+            <h2>Project Management</h2>
+            <form id="projectForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectTitle">Project Title</label>
+                        <input type="text" id="projectTitle" placeholder="Project name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectImage">Image URL</label>
+                        <input type="url" id="projectImage" placeholder="https://example.com/image.jpg">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectDescription">Description</label>
+                    <textarea id="projectDescription" placeholder="Project description"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectTech">Technologies (comma-separated)</label>
+                        <input type="text" id="projectTech" placeholder="React, Node.js, MongoDB">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projectGithub">GitHub URL</label>
+                        <input type="url" id="projectGithub" placeholder="https://github.com/username/project">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="projectLive">Live Demo URL</label>
+                    <input type="url" id="projectLive" placeholder="https://project-demo.com">
+                </div>
+                
+                <button type="submit" class="btn">Add Project</button>
+            </form>
+        </div>
+        
+        <!-- Skills Tab -->
+        <div id="skills" class="tab-content">
+            <h2>Skills Management</h2>
+            <form id="skillsForm">
+                <div class="form-group">
+                    <label for="skillCategory">Skill Category</label>
+                    <input type="text" id="skillCategory" placeholder="e.g., Frontend, Backend, Tools">
+                </div>
+                
+                <div class="form-group">
+                    <label for="skillItems">Skills (comma-separated)</label>
+                    <input type="text" id="skillItems" placeholder="React, Vue.js, JavaScript, TypeScript">
+                </div>
+                
+                <button type="submit" class="btn">Add Skill Group</button>
+            </form>
+        </div>
+        
+        <!-- Contact Tab -->
+        <div id="contact" class="tab-content">
+            <h2>Contact Information</h2>
+            <form id="contactForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" placeholder="+1 (555) 123-4567">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="City, Country">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="github">GitHub URL</label>
+                        <input type="url" id="github" placeholder="https://github.com/username">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="linkedin">LinkedIn URL</label>
+                        <input type="url" id="linkedin" placeholder="https://linkedin.com/in/username">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="twitter">Twitter URL</label>
+                    <input type="url" id="twitter" placeholder="https://twitter.com/username">
+                </div>
+                
+                <button type="submit" class="btn">Update Contact Info</button>
+            </form>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            Content updated successfully! Check your portfolio.
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Success message
+        function showSuccess() {
+            const message = document.getElementById('successMessage');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Form handlers
+        document.getElementById('personalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                title: document.getElementById('title').value,
+                bio: document.getElementById('bio').value,
+                about: document.getElementById('about').value
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('portfolioPersonal', JSON.stringify(formData));
+            showSuccess();
+        });
+        
+        document.getElementById('projectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const projectData = {
+                title: document.getElementById('projectTitle').value,
+                description: document.getElementById('projectDescription').value,
+                image: document.getElementById('projectImage').value,
+                technologies: document.getElementById('projectTech').value.split(',').map(t => t.trim()),
+                github: document.getElementById('projectGithub').value,
+                live: document.getElementById('projectLive').value
+            };
+            
+            // Get existing projects or create empty array
+            let projects = JSON.parse(localStorage.getItem('portfolioProjects') || '[]');
+            projects.push(projectData);
+            
+            localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+            showSuccess();
+            
+            // Reset form
+            this.reset();
+        });
+        
+        document.getElementById('skillsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const skillData = {
+                category: document.getElementById('skillCategory').value,
+                items: document.getElementById('skillItems').value.split(',').map(s => s.trim())
+            };
+            
+            // Get existing skills or create empty array
+            let skills = JSON.parse(localStorage.getItem('portfolioSkills') || '[]');
+            skills.push(skillData);
+            
+            localStorage.setItem('portfolioSkills', JSON.stringify(skills));
+            showSuccess();
+            
+            // Reset form
+            this.reset();
+        });
+        
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const contactData = {
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value,
+                social: {
+                    github: document.getElementById('github').value,
+                    linkedin: document.getElementById('linkedin').value,
+                    twitter: document.getElementById('twitter').value
+                }
+            };
+            
+            localStorage.setItem('portfolioContact', JSON.stringify(contactData));
+            showSuccess();
+        });
+    </script>
+</body>
+</html>

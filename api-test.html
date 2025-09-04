@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portfolio API Test</title>
+</head>
+<body>
+    <h1>Testing Portfolio API</h1>
+    <div id="test-results"></div>
+    
+    <script>
+    async function testAPI() {
+        const resultsDiv = document.getElementById('test-results');
+        resultsDiv.innerHTML = '<p>Testing API...</p>';
+        
+        try {
+            console.log('Fetching from api/portfolio-data.php');
+            const response = await fetch('api/portfolio-data.php');
+            console.log('Response:', response);
+            
+            const data = await response.json();
+            console.log('Data:', data);
+            
+            resultsDiv.innerHTML = `
+                <h2>API Response:</h2>
+                <pre>${JSON.stringify(data, null, 2)}</pre>
+            `;
+        } catch (error) {
+            console.error('Error:', error);
+            resultsDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        }
+    }
+    
+    // Test immediately
+    testAPI();
+    </script>
+</body>
+</html>
